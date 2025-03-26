@@ -1,0 +1,63 @@
+//1.build는 프로젝트의 정보와 라이브러리 추가를 담당
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.teamn'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        //자바 버전 설정
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+//추가 라이브러리(종속성) - 외부 라이브러리에서 내용을 확인
+//mvnrepository.com 에서 추가 라이브러리 검색 및 버전을 확인해서 추가
+dependencies {
+    //데이터베이스를 운영할때 반드시 사용
+    //JPA (Repository - SQL 문)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    //데이터 베이스 서버
+    runtimeOnly 'com.h2database:h2'
+
+    //HTML 에 프로그래밍을 thymeleaf로 구현
+    //HTML에서 명령어를 구현할때
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //modelmapper(DTO와 Entity간에 데이터를 변환하는 라이브러리)
+    //ModelMapper 사용 안하면 DT
+    implementation 'org.modelmapper:modelmapper:3.1.1'
+
+    //웹서비스 (HTML)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //메소드를 자동화 생성(DTO, Entity가 존재할때 ) - > 수동으로 생성 메뉴에서
+    compileOnly 'org.projectlombok:lombok'
+
+    //개발 지원툴(자동 갱신, 서버 자동실행)
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
