@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Detail_디테일</title>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-3"></div><!--왼쪽여백-->
+        <div class="col-6">
+            <!--카드형식으로 틀-->
+            <form th:action="@{/detail}" method="post">
+
+                <div class="card mt-5">
+                    <div class="card-header">게시글 수정</div><!--제목 h1~h6-->
+                    <!--Controller에서 1개의 데이터를 전달 받으면 data-->
+                    <div class="card-body"><!--입력약식-->
+
+                        <div class="mb-3 mt-3">
+                            <p>번호 : <span th:text="${data.id}"></span></p>
+
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <p>내용 : <span th:text="${data.subject}"></span></p>
+
+                        </div>
+                        <!--HTML에서 절대 ID 중복이 되지 말아야 한다.-->
+                        <div class="mb-3 mt-3">
+                            <p>내용 : <span th:text="${data.content}"></span></p>
+
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <p>작성자 : <span th:text="${data.author}"></span></p>
+
+                        </div>
+                        <div class="mb-3 mt-3">
+                            <p>작성일 : <span th:text="${data.modDate}"></span></p>
+
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <a th:href="@{/modify(id=${data.id})}" class="btn btn-primary">수정</a>
+                        <a th:href="@{/delete(id=${data.id})}" class="btn btn-secondary">삭제</a>
+                        <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/list}'|">이전</button>
+                    </div>
+                </div>
+
+            </form>
+            <!--Form으로 입력폼-->
+
+
+        </div><!--작업영역-->
+        <div class="col-3"></div><!--오른쪽여백-->
+    </div><!--Row 끝-->
+</div><!--Container 끝-->
+
+</body>
+</html>

@@ -8,5 +8,65 @@
 </head>
 <body>
 
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div><!--왼쪽여백-->
+        <div class="col-8">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3"></div><!--왼쪽여백-->
+                    <div class="col-6">
+                        <!--카드형식으로 틀-->
+                        <form th:action="@{/modify}" method="post">
+
+                            <div class="card mt-5">
+                                <div class="card-header">게시글 수정</div><!--제목 h1~h6-->
+                                <!--Controller에서 1개의 데이터를 전달 받으면 data-->
+                                <div class="card-body"><!--입력약식-->
+
+                                    <div class="mb-3 mt-3">
+                                        <label for="id" class="form-label">번호:</label>
+                                        <input type="text" class="form-control" id="id"  name="id" th:value="${data.id}" readonly>
+                                    </div>
+                                    <div class="mb-3 mt-3">
+                                        <label for="subject">제목:</label>
+                                        <input class="form-control" rows="5" id="subject" name="subject" th:value="${data.author}">
+                                    </div>
+                                    <!--HTML에서 절대 ID 중복이 되지 말아야 한다.-->
+                                    <div class="mb-3 mt-3">
+                                        <label for="content" class="form-label">내용:</label>
+                                        <textarea type="text" class="form-control" id="content" placeholder="내용을 수정해주세요" rows="5" name="content" th:text="${data.content}"></textarea>
+                                    </div>
+                                    <div class="mb-3 mt-3">
+                                        <label for="author" class="form-label">작성자:</label>
+                                        <input type="text" class="form-control" id="author" placeholder="작성자를 수정해주세요" name="author" th:value="${data.author}">
+                                    </div>
+                                    <div class="mb-3 mt-3">
+                                        <label for="modDate" class="form-label">수정일:</label>
+                                        <input type="text" class="form-control" id="modDate" placeholder="작성자를 입력하세요" name="modDate" th:value="${data.modDate}">
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">수정</button>
+                                    <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/list}'|">이전</button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <!--Form으로 입력폼-->
+
+
+                    </div><!--작업영역-->
+                    <div class="col-3"></div><!--오른쪽여백-->
+                </div><!--Row 끝-->
+            </div><!--Container 끝-->
+
+
+        </div><!--작업영역-->
+        <div class="col-2"></div><!--오른쪽여백-->
+    </div><!--Row 끝-->
+</div><!--Container 끝-->
+
+
 </body>
 </html>

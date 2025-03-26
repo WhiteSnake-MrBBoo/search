@@ -4,9 +4,116 @@
 >
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--부트 스트랩 스타일시트(HTML 속성)-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--부트스트랩에 효과(자바스크립트)-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!--부트스트랩 아이콘-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
     <title>List_리스트</title>
 </head>
 <body>
 
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div><!--왼쪽여백-->
+        <div class="col-8">
+            <!--제목-->
+            <h1 class="mt-5">게시글 목록</h1>
+
+            <!--검색-->
+            <!--Controller에 메소드명의 인수를 참고해서 이름을 지정-->
+            <!--
+            Controller에 메소드명의 인수를 참고해서 이름을 지정 =>form, A태그
+            -->
+            <form th:action="@{/list}" ><!--GetMapping 또는 PostMapping 이름을 참고해서-->
+
+                <div class="input-group mb-3">
+                    <select class="form-select" name="type">
+                        <option value="" th:selected="${type==null}">전체</option>
+                        <option value="s" th:selected="${type=='s'}">제목</option>
+                        <option value="c" th:selected="${type=='c'}">내용</option>
+                        <option value="a" th:selected="${type=='a'}">작성자</option>
+                        <option value="sc" th:selected="${type=='sc'}">제목+내용</option>
+                        <option value="sca" th:selected="${type=='sca'}">제목+내용+작성자</option>
+                    </select>
+                    <input type="text" class="form-control" name="keyword" th:value="${keyword}">
+                    <button class="btn btn-primary" type="submit">검색</button>
+                    <button class="btn btn-danger" type="reset">초기화</button>
+                </div>
+
+            </form>
+
+            <!--등록버튼-->
+            <a th:href="@{/create}" class="btn btn-secondary">등록</a>
+            <!--버튼을 클릭했을때(onclick) 해당주소로 이동(location.href=주소)-->
+            <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/create}'|">Onclick:등록</button>
+            <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/list}'|">리스트</button>
+
+            <!--목록(표-한줄에 내용 표현이 가능하면, 카드-한줄에 내용표현이 불가능)-->
+            <!--controller 에서 하나의 데이터를 번달 - >DATA 받고 , Controller > 여러개의 데이터를 전달 > List받고-->
+
+            <table class="table table-bordered mt-3">
+                <thead>
+                <tr><!--DTO의 변수를 참고해서 모양(ListDTO)-->
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>등록일자</th>
+                    <th>작업</th>
+                </tr>
+                </thead>
+
+                <tbody th:each="data : ${list}">
+                <tr><!--th 갯수만큰 td-->
+                    <td th:text="${data.id}">9999</td>
+                    <td th:text="${data.subject}">이것은 테스트 게시글</td>
+                    <td th:text="${data.author}">홍길동</td>
+                    <td th:text="${data.modDate}"></td>
+                    <td><a th:href="@{/detail(id=${data.id})}" class="btn btn-secondary"><i class="bi bi-geo"></i></a></td>
+                </tr>
+                </tbody>
+            </table>
+            <!--페이지번호-->
+            <ul class="pagination">
+                <li class="page-item" th:unless="${startPage==1}">
+                    <a class="page-link" th:href="@{/list(page=1,type=${type},keyword=${keyword})}">첫페이지</a>
+                </li>
+
+                <span th:each="page:${#numbers.sequence(startPage,endPage,1)}">
+                    <li class="page-item active" th:class="${page==currentpage} ? 'active':''">
+                    <a class="page-link" th:href="@{/list(page=${page},type=${type},keyword=${keyword})}" th:text="${page}">1</a>
+                </li>
+                </span>
+
+                <li class="page-item" th:unless="${lastPage<=currentpage}">
+                    <a class="page-link" th:href="@{/list(page=${lastPage},type=${type},keyword=${keyword})}">끝페이지</a>
+                </li>
+            </ul>
+            <a  class="btn btn-secondary"><i class="bi bi-geo"></i></a>
+
+        </div><!--작업영역-->
+        <div class="col-2">
+
+
+        </div><!--오른쪽여백-->
+    </div><!--Row 끝-->
+</div><!--Container 끝-->
+
+
 </body>
 </html>
+<!--
+1.컨테이너 : 브라우저의 영역지정
+2.row(행,줄) - > col(칸)으로 작업 영영지정
+3.태그를 이용해서 모양 및 페이지 구성                  -프론트 - 웹디자인 가능자
+4.thymeleaf 를 이용해서 서버에서 전달받은 값을 처리  -백엔드(java 가능자)
+5.javascript를 이용해서 효과, HTML내에 연산처리      -응용-프론트(),node 가능자
+    DOM(문서내에 객체(태그)를 조작하는 메소드)
+    jquery(DOM을 단순화해서 쉽게 사용하도록 만든 스크립트)
+    ajax(HTML와 서버간의 정보를 비동기식으로 처리)
+
+-->

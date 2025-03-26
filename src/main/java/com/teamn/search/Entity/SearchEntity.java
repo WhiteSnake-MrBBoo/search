@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 //lombok을 이용해서 메소드를 자동화 합니다.--이클립스는 lombok이 수동 설치임
 //테이블 조인 작업시 반드시 @toString은 사용하면 안된다.
@@ -24,6 +27,7 @@ import org.springframework.data.annotation.LastModifiedDate;
         allocationSize = 1  //크기
  )  //Entity와 1:1로만 사용
 
+@EntityListeners(AuditingEntityListener.class)  //createDate, LastModifyDate불가능
 public class SearchEntity {
 
     @Id //기본키
@@ -42,11 +46,11 @@ public class SearchEntity {
 
     @CreatedDate    //생성시 자동생성
     @Column(name = "regDate")
-    private String regDate; //등록일자
+    private LocalDateTime regDate; //등록일자
 
     @LastModifiedDate   //최근(최종)수정시 자동생성
     @Column(name = "modDate")
-    private String modDate; //수정일자
+    private LocalDateTime modDate; //수정일자
 
 
     //생성자, Getter, Setter, toString, Build 메소드
