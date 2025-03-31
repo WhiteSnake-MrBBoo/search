@@ -18,7 +18,7 @@ public class PagenationUtil {
     public static Map<String , Integer> Pagination (Page < ?> page) {
         //첫페이지(1) 이전(현재-1) 현재페이지 이후(현재+1) 마지막페이지(페이지 마지막)
         //데이터 베이스 페이지 번호(0) - > 화면에 출력할 현재 페이지 번호
-        int currentpage = page.getNumber() + 1;
+        int currentpage = page.getNumber() + 1; //시작은 0부터 이기 때문에 필수
         int totalPages = page.getTotalPages();//전체 페이지 번호(마지막 번호)
         int blockLimit = 10; //화면에 출력할 페이지 번호의 갯수 페이지 번호의 갯수 처음이전 1,2,3,4, 다음끝
 
